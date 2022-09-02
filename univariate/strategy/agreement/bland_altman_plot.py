@@ -7,9 +7,8 @@ import numpy as np
 
 
 class BlandAltmanPlot(AgreementStrategy):
-    """
+    """ """
 
-    """
     @classmethod
     def is_agreed(cls, sample: np.array) -> bool:
         pass
