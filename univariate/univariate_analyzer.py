@@ -2,7 +2,7 @@
     Univariate Time Series Analyzer module
 """
 
-import pandas as pd
+from pyspark.sql import DataFrame
 from typing import Optional, List
 from univariate.hook import Hook
 from univariate.analyzer import AnalysisReport, Analyzer, RegularityAnalyzer
@@ -13,19 +13,28 @@ class UnivariateAnalyzer:
     Univariate Time Series Analyzer
     """
 
-    def __init__(self, ts: pd.DataFrame, hooks=Optional[List[Hook]]):
+    def __init__(
+        self,
+        ts: DataFrame,
+        val_col: str = "value",
+        time_col: str = "time",
+        hooks=Optional[List[Hook]],
+    ):
         """
 
-        :param ts: pandas dataframe that has Datatime index, and has one timeseries value(float or number) series
-        :param hooks:
+        :param ts: Spark dataframe that has one datatime column, and has one timeseries value(float or number) column
+        :param val_col: string column name containing timeseries values
+        :param time_col: string column name containing pyspark.sql.DatetimeType
+        :param hooks: list of hooks that want to be notified analysis reports
         """
-        self.ts: pd.DataFrame = ts
+        self.ts: DataFrame = ts
         self.hooks: List[Hook] = hooks or []  # todo : default post analysis hook
         try:
-            self.__validate_ts()
+            self.__validate_ts(val_col, time_col)
         except Exception as e:
             print(
-                f"Error in validation ts, ts must be pandas dataframe that has Datatime index, and has one timeseries value(float or number) series"
+                "Error in validation ts, ts must be pyspark sql dataframe that has one DatatimeType column, "
+                "and has one timeseries value(float or number) column"-87
             )
             raise e
         else:
@@ -35,7 +44,7 @@ class UnivariateAnalyzer:
             self.__notify_report(self.regularity_report)
             self.__enqueue_analysis_job(AnalysisReport["regular_type"])
 
-    def __validate_ts(self) -> bool:
+    def __validate_ts(self, val_col: str, time_col: str) -> bool:
         pass
 
     def __notify_report(self, report: AnalysisReport):
