@@ -31,10 +31,10 @@ class UnivariateAnalyzer:
         self.hooks: List[Hook] = hooks or []  # todo : default post analysis hook
         try:
             self.__validate_ts(val_col, time_col)
-        except Exception as e:
+        except Exception as e:  # todo: Custom exception or specific
             print(
                 "Error in validation ts, ts must be pyspark sql dataframe that has one DatatimeType column, "
-                "and has one timeseries value(float or number) column"-87
+                "and has one timeseries value(float or number) column"
             )
             raise e
         else:

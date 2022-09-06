@@ -14,10 +14,6 @@ class Analyzer(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def __init__(self, strategies: Optional[Dict[str, Enum], None]):
-        pass
-
-    @abstractmethod
     def analyze(self) -> AnalysisReport:
         """
             Command Executor

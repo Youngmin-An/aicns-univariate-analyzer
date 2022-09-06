@@ -3,12 +3,13 @@
 """
 
 from univariate.strategy.agreement import AgreementStrategy
-import numpy as np
+from univariate.analyzer import AnalysisReport
+from pyspark.sql import DataFrame
 
 
 class BlandAltmanPlot(AgreementStrategy):
     """ """
 
     @classmethod
-    def is_agreed(cls, sample: np.array) -> bool:
+    def measure_agreement(cls, sample: DataFrame) -> AnalysisReport:
         pass

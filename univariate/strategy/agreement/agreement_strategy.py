@@ -4,7 +4,8 @@
 
 from abc import ABCMeta, abstractmethod
 from enum import Enum
-import numpy as np
+from univariate.analyzer import AnalysisReport
+from pyspark.sql import DataFrame
 
 
 class AgreementType(Enum):
@@ -17,5 +18,5 @@ class AgreementStrategy(metaclass=ABCMeta):
     """
 
     @classmethod
-    def is_agreed(cls, sample: np.array) -> bool:
+    def measure_agreement(cls, sample: DataFrame) -> AnalysisReport:
         pass
