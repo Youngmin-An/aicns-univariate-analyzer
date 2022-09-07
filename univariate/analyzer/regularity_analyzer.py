@@ -17,7 +17,8 @@ class RegularityAnalyzer(Analyzer):
     """ """
 
     def __init__(
-        self, period_strategy_type: PeriodCalcType = PeriodCalcType.ClusteringAndApproximateGCD
+        self,
+        period_strategy_type: PeriodCalcType = PeriodCalcType.ClusteringAndApproximateGCD,
     ):
         """
 

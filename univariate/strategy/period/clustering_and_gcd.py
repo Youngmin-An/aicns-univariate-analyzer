@@ -26,19 +26,37 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         """
         # 1. Mean shift Clustering  todo : Implement Spark DataFrame-native mean-shift clustering
         diff_array = np.array(diff_df.select(diff_col_name).collect())
-        bandwidth = estimate_bandwidth(diff_array, quantile=0.5)  # todo : adjust quantile index
+        bandwidth = estimate_bandwidth(
+            diff_array, quantile=0.5
+        )  # todo : adjust quantile index
         meanshift = MeanShift(bandwidth=round(bandwidth, 3))
         cluster_labels = meanshift.fit_predict(diff_array)
-        cluster_label_df = diff_df.sql_ctx.createDataFrame(enumerate(cluster_labels.tolist(), start=1), ["id", "label"])
-        clustered_diff_df = diff_df.withColumn("id", F.row_number().over(Window.orderBy(F.monotonically_increasing_id()))).join(cluster_label_df, on="id", how="inner")
+        cluster_label_df = diff_df.sql_ctx.createDataFrame(
+            enumerate(cluster_labels.tolist(), start=1), ["id", "label"]
+        )
+        clustered_diff_df = diff_df.withColumn(
+            "id", F.row_number().over(Window.orderBy(F.monotonically_increasing_id()))
+        ).join(cluster_label_df, on="id", how="inner")
 
         # 2. approximated gcd  todo : enhance algorithm
         period = -1
         preset_unit = 1000  # todo : parameterize
         stopping_criteria: bool = False
         while not stopping_criteria:
-            max_label = clustered_diff_df.groupBy("label").agg(F.count("*").alias("label_cnt")).sort(F.col("label_cnt").desc()).first().asDict()["label"]
-            period = clustered_diff_df.filter(cluster_label_df["label"] == max_label).agg(F.mean(diff_col_name).alias("period")).first().asDict()["period"] // preset_unit
+            max_label = (
+                clustered_diff_df.groupBy("label")
+                .agg(F.count("*").alias("label_cnt"))
+                .sort(F.col("label_cnt").desc())
+                .first()
+                .asDict()["label"]
+            )
+            period = (
+                clustered_diff_df.filter(cluster_label_df["label"] == max_label)
+                .agg(F.mean(diff_col_name).alias("period"))
+                .first()
+                .asDict()["period"]
+                // preset_unit
+            )
             stopping_criteria = True
 
         # 2-1. (optional) leave outlier cluster out # todo
@@ -56,7 +74,13 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
 
         # 3-3. Plot scatter one-dimension clustered time diff
         report_df = clustered_diff_df.withColumn("title", F.lit(diff_col_name))
-        report.plot["cluster"] = px.scatter(report_df.toPandas(), y="title", x=diff_col_name, color="label", symbol="label")
+        report.plot["cluster"] = px.scatter(
+            report_df.toPandas(),
+            y="title",
+            x=diff_col_name,
+            color="label",
+            symbol="label",
+        )
 
         # 3-4. Count missing value
         # 3-5. Outlier detect, plot, and do processing
