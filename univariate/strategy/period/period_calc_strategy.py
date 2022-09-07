@@ -9,12 +9,12 @@ from pyspark.sql import DataFrame
 
 
 class PeriodCalcType(Enum):
-    ClusteringAndApproximateGCD = "clustering_and_approximate_gcd"
+    ClusteringAndApproximateGCD = "ClusteringAndApproximateGCD"
 
 
 class PeriodCalcStrategy(metaclass=ABCMeta):
     """
-    Abstract strategy for calculating regular period between each observation if time series is regular
+        Abstract strategy for calculating regular period between each observation if time series is regular
     """
 
     @classmethod
