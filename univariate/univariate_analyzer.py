@@ -51,6 +51,7 @@ class UnivariateAnalyzer:
             )
             self.__notify_report(self.regularity_report)
             self.__enqueue_analysis_job()
+        logger.debug("Setup Analyzer finish")
 
     def __validate_ts(self, val_col: str, time_col: str) -> bool:
         pass
@@ -58,6 +59,7 @@ class UnivariateAnalyzer:
     def __notify_report(self, report: AnalysisReport):
         map(lambda hook: hook.do_post_analysis(report), self.hooks)
         logger.debug("Notify all hook")
+        logger.debug("Notify hook finish")
 
     def __enqueue_analysis_job(self):
         """
@@ -66,9 +68,12 @@ class UnivariateAnalyzer:
         """
         logger.debug("enqueue analysis job start")
         if self.regularity_report.regularity == "regular":
+            logger.debug("regularity: regular")
             pass
         elif self.regularity_report.regularity == "irregular":
+            logger.debug("regularity: irregular")
             pass
+        logger.debug("enqueue analysis job finish")
 
     def analyze(self):
         """
@@ -82,3 +87,4 @@ class UnivariateAnalyzer:
             ),
             self.analysis_queue,
         )  # todo : Explore parallezing with spark sub(child) context?
+        logger.debug("analyze return")

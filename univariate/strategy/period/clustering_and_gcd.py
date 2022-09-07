@@ -11,6 +11,9 @@ import pyspark.sql.functions as F
 from pyspark.sql.window import Window
 from pyspark import SparkContext, SQLContext
 import plotly.express as px
+import logging
+
+logger = logging.getLogger()
 
 
 class ClusteringAndApproximateGCD(PeriodCalcStrategy):
@@ -24,6 +27,7 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         :param diff_col_name:
         :return:
         """
+        logger.debug("calc period called")
         # 1. Mean shift Clustering  todo : Implement Spark DataFrame-native mean-shift clustering
         diff_array = np.array(diff_df.select(diff_col_name).collect())
         bandwidth = estimate_bandwidth(
@@ -63,7 +67,7 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
 
         # 2-1. (optional) leave outlier cluster out # todo
 
-        # 3. make a decision & report  # todo: enhance
+        # 3. make a decision & report  # todo: enhance todo: report builder
         report = AnalysisReport()
         # 3-1. Period, Error, Regularity
         if period is not -1:
@@ -87,4 +91,5 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         # 3-4. Count missing value
         # 3-5. Outlier detect, plot, and do processing
         # 3-6. Explainable Validation report(p-value, Prediction interval...)
+        logger.debug("calc period finish")
         return report
