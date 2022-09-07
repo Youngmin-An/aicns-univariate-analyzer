@@ -30,7 +30,9 @@ class UnivariateAnalyzer:
         :param time_col: string column name containing pyspark.sql.DatetimeType
         :param hooks: list of hooks that want to be notified analysis reports
         """
-        logger.debug(f"Setup Analyzer start, ts: {ts}, val_col: {val_col}, time_col: {time_col}, hooks: {hooks or '[]'}")
+        logger.debug(
+            f"Setup Analyzer start, ts: {ts}, val_col: {val_col}, time_col: {time_col}, hooks: {hooks or '[]'}"
+        )
         self.ts: DataFrame = ts
         self.hooks: List[Hook] = hooks or []  # todo : default post analysis hook
         self.analysis_queue: List[Analyzer] = list()
@@ -44,7 +46,9 @@ class UnivariateAnalyzer:
             raise e
         else:
             regularity_analyzer: Analyzer = RegularityAnalyzer()
-            self.regularity_report: AnalysisReport = regularity_analyzer.analyze(ts=self.ts, time_col_name=time_col)
+            self.regularity_report: AnalysisReport = regularity_analyzer.analyze(
+                ts=self.ts, time_col_name=time_col
+            )
             self.__notify_report(self.regularity_report)
             self.__enqueue_analysis_job()
 

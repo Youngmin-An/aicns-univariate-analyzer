@@ -14,7 +14,7 @@ class PeriodCalcType(Enum):
 
 class PeriodCalcStrategy(metaclass=ABCMeta):
     """
-        Abstract strategy for calculating regular period between each observation if time series is regular
+    Abstract strategy for calculating regular period between each observation if time series is regular
     """
 
     @classmethod
