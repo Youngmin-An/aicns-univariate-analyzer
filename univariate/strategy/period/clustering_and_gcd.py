@@ -56,7 +56,7 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
                 .agg(F.mean(diff_col_name).alias("period"))
                 .first()
                 .asDict()["period"]
-                // preset_unit
+                // preset_unit * preset_unit
             )
             stopping_criteria = True
 
