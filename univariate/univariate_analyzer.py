@@ -44,7 +44,7 @@ class UnivariateAnalyzer:
             raise e
         else:
             regularity_analyzer: Analyzer = RegularityAnalyzer()
-            self.regularity_report: AnalysisReport = regularity_analyzer.analyze()
+            self.regularity_report: AnalysisReport = regularity_analyzer.analyze(ts=self.ts, time_col_name=time_col)
             self.__notify_report(self.regularity_report)
             self.__enqueue_analysis_job()
 
