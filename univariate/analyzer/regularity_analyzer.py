@@ -4,7 +4,7 @@
 
 from univariate.analyzer import Analyzer
 from univariate.analyzer import AnalysisReport
-from univariate.strategy.agreement import AgreementStrategy, AgreementType
+from univariate.strategy.period import PeriodCalcStrategy, PeriodCalcType
 from typing import Dict, Optional
 from enum import Enum
 import importlib
@@ -17,17 +17,17 @@ class RegularityAnalyzer(Analyzer):
     """ """
 
     def __init__(
-        self, agreement_strategy_type: AgreementType = AgreementType.BLAND_ALTMAN
+        self, period_strategy_type: PeriodCalcType = PeriodCalcType.ClusteringAndApproximateGCD
     ):
         """
 
-        :param agreement_strategy_type: Enum val for agreement strategy, default BLAND_ALTMAN
+        :param period_strategy_type: Enum val for calc period strategy, default ClusteringAndApproximateGCD
         """
         concrete_cls = getattr(
-            importlib.import_module("univariate.strategy.agreement"),
-            agreement_strategy_type.value,
+            importlib.import_module("univariate.strategy.period"),
+            period_strategy_type.value,
         )
-        self.agreement_strategy: AgreementStrategy = concrete_cls()
+        self.period_strategy: PeriodCalcStrategy = concrete_cls()
 
     def analyze(self, ts: DataFrame, time_col_name: str) -> AnalysisReport:
         """
@@ -36,16 +36,16 @@ class RegularityAnalyzer(Analyzer):
         :param time_col_name:
         :return:
         """
+        diff_col_name = time_col_name + "_diff"
         differenced_timestamp = self.__make_difference_series_of_timestamp(
-            ts, time_col_name
+            ts, time_col_name, diff_col_name
         )
-        return self.agreement_strategy.measure_agreement(differenced_timestamp)
+        return self.period_strategy.calc_period(differenced_timestamp, diff_col_name)
 
     def __make_difference_series_of_timestamp(
-        self, ts: DataFrame, time_col_name: str
+        self, ts: DataFrame, time_col_name: str, diff_col_name: str
     ) -> DataFrame:
         window = Window.partitonBy().orderBy(time_col_name)
-        diff_col_name = time_col_name + "_diff"
         return (
             ts.withColumn(
                 diff_col_name,
