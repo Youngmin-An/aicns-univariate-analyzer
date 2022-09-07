@@ -46,7 +46,7 @@ class RegularityAnalyzer(Analyzer):
     def __make_difference_series_of_timestamp(
         self, ts: DataFrame, time_col_name: str, diff_col_name: str
     ) -> DataFrame:
-        window = Window.partitonBy().orderBy(time_col_name)
+        window = Window.partitionBy().orderBy(time_col_name)
         return (
             ts.withColumn(
                 diff_col_name,
