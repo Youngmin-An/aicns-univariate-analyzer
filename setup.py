@@ -1,8 +1,11 @@
 from setuptools import setup, find_packages
 
+
+__version__ = "0.0.1"
+
 setup(
     name="aicns-univariate-analyzer",
-    version="0.0.1",
+    version=__version__,
     description="Univariate time series analyzer library package in AICNS project",
     author="Youngmin An",
     author_email="youngmin.develop@gmail.com",
