@@ -5,7 +5,12 @@
 from pyspark.sql import DataFrame
 from typing import Optional, List
 from univariate.hook import Hook
-from univariate.analyzer import AnalysisReport, Analyzer, RegularityAnalyzer
+from univariate.analyzer import (
+    AnalysisReport,
+    Analyzer,
+    RegularityAnalyzer,
+    DescriptiveStatAnalyzer,
+)
 import logging
 
 logger = logging.getLogger()
@@ -36,6 +41,8 @@ class UnivariateAnalyzer:
         self.ts: DataFrame = ts
         self.hooks: List[Hook] = hooks or []  # todo : default post analysis hook
         self.analysis_queue: List[Analyzer] = list()
+        self.time_col_name: str = time_col
+        self.data_col_name: str = val_col
         try:
             self.__validate_ts(val_col, time_col)
         except Exception as e:  # todo: Custom exception or specific
@@ -67,10 +74,11 @@ class UnivariateAnalyzer:
         :return:
         """
         logger.debug("enqueue analysis job start")
-        if self.regularity_report.regularity == "regular":
+        if self.regularity_report.parameters["regularity"] == "regular":
             logger.debug("regularity: regular")
+            self.analysis_queue.append(DescriptiveStatAnalyzer())
             pass
-        elif self.regularity_report.regularity == "irregular":
+        elif self.regularity_report.parameters["regularity"] == "irregular":
             logger.debug("regularity: irregular")
             pass
         logger.debug("enqueue analysis job finish")
@@ -81,10 +89,26 @@ class UnivariateAnalyzer:
         :return:
         """
         logger.debug("analyze called")
+
+        reports = list(
+            map(
+                lambda job: job.analyze(
+                    ts=self.ts,
+                    time_col_name=self.time_col_name,
+                    data_col_name=self.data_col_name,
+                ),
+                self.analysis_queue,
+            )
+        )  # todo : Explore parallezing with spark sub(child) context & python asyncio?
         map(
-            lambda job: map(
-                lambda hook: hook.do_post_analysis(job.analyze), self.hooks
-            ),
-            self.analysis_queue,
-        )  # todo : Explore parallezing with spark sub(child) context?
+            lambda report: map(lambda hook: hook.do_post_analysis(report), self.hooks),
+            reports,
+        )
+        """
+        reports = []
+        for job in self.analysis_queue:
+            report = job.analyze(ts=self.ts, time_col_name=self.time_col_name, data_col_name=self.data_col_name)
+            reports.append(report)
+        """  # todo : clean dummy code
         logger.debug("analyze return")
+        return reports
