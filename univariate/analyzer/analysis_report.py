@@ -12,8 +12,6 @@ class AnalysisReport:
         """
         # todo: temp report, spec latter
         """
-        self.period = None
-        self.period_error = None
-        self.regularity = None
-        self.distribution = None
-        self.plot = dict()
+        self.metrics = dict()
+        self.parameters = dict()
+        self.plots = dict()

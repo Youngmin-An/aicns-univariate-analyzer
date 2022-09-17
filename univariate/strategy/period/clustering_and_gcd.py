@@ -40,7 +40,9 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         )
         clustered_diff_df = diff_df.withColumn(
             "id", F.row_number().over(Window.orderBy(F.monotonically_increasing_id()))
-        ).join(cluster_label_df, on="id", how="inner")
+        ).join(
+            cluster_label_df, on="id", how="inner"
+        )  # todo: no partition window operation will move all data to a single partition
         clustered_diff_df.cache()
 
         # 2. approximated gcd  todo : enhance algorithm
@@ -71,16 +73,16 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         report = AnalysisReport()
         # 3-1. Period, Error, Regularity
         if period is not -1:
-            report.period = period
-            report.period_error = None
-            report.regularity = "regular"
+            report.parameters["period"] = period
+            report.parameters["periodic_error"] = None
+            report.parameters["regularity"] = "regular"
         else:
-            report.regularity = "irregular"
+            report.parameters["regularity"] = "irregular"
         # 3-2. Report diff distribution, plot histogram
-        report.distribution = clustered_diff_df
+        report.parameters["distribution"] = clustered_diff_df
         # 3-3. Plot scatter one-dimension clustered time diff
         report_df = clustered_diff_df.withColumn("title", F.lit(diff_col_name))
-        report.plot["cluster"] = px.scatter(
+        report.plots["cluster"] = px.scatter(
             report_df.toPandas(),
             y="title",
             x=diff_col_name,
