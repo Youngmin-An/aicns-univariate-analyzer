@@ -33,7 +33,7 @@ class RegularityAnalyzer(Analyzer):
         )
         self.period_strategy: PeriodCalcStrategy = concrete_cls()
 
-    def analyze(self, ts: DataFrame, time_col_name: str) -> AnalysisReport:
+    def analyze(self, ts: DataFrame, **kwargs) -> AnalysisReport:
         """
 
         :param ts: Time series spark dataframe containing timestamp, data
@@ -41,9 +41,9 @@ class RegularityAnalyzer(Analyzer):
         :return:
         """
         logger.debug("analyze called")
-        diff_col_name = time_col_name + "_diff"
+        diff_col_name = kwargs["time_col_name"] + "_diff"
         differenced_timestamp = self.__make_difference_series_of_timestamp(
-            ts, time_col_name, diff_col_name
+            ts, kwargs["time_col_name"], diff_col_name
         )
         logger.debug("analyze finish")
         return self.period_strategy.calc_period(differenced_timestamp, diff_col_name)
