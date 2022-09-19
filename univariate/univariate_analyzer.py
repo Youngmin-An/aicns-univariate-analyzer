@@ -50,7 +50,7 @@ class UnivariateAnalyzer:
             ts = DuplicateProcessor.drop_duplicates(ts=ts)
         self.__validate_ts(ts=ts, time_col_name=time_col, data_col_name=val_col)
         self.hooks: List[Hook] = hooks  # todo : default post analysis hook
-        self.ts: DataFrame = ts.sort(time_col)
+        self.ts: DataFrame = ts.sort(time_col).select([time_col, val_col])
         self.analysis_queue: List[Analyzer] = list()
         self.time_col_name: str = time_col
         self.data_col_name: str = val_col
