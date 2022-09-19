@@ -11,6 +11,8 @@ from univariate.analyzer import (
     RegularityAnalyzer,
     DescriptiveStatAnalyzer,
 )
+from univariate.ts_validator import Validator
+from univariate.duplicate import DuplicateProcessor, DuplicateReport
 import logging
 
 logger = logging.getLogger()
@@ -26,7 +28,9 @@ class UnivariateAnalyzer:
         ts: DataFrame,
         val_col: str = "value",
         time_col: str = "time",
-        hooks=Optional[List[Hook]],
+        hooks: Optional[List[Hook]] = [],
+        validators: Optional[List[Validator]] = [],
+        drop_duplicates: bool = True,
     ):
         """
 
@@ -38,30 +42,38 @@ class UnivariateAnalyzer:
         logger.debug(
             f"Setup Analyzer start, ts: {ts}, val_col: {val_col}, time_col: {time_col}, hooks: {hooks or '[]'}"
         )
-        self.ts: DataFrame = ts
-        self.hooks: List[Hook] = hooks or []  # todo : default post analysis hook
+        self.validators: List[
+            Validator
+        ] = validators  # todo : default validator  # todo : who is creator that has responsibility
+        self.duplicate_report: DuplicateReport = DuplicateProcessor.detect_duplicates(ts=ts, time_col_name=time_col, data_col_name=val_col)
+        if drop_duplicates and self.duplicate_report.duplicated:
+            ts = DuplicateProcessor.drop_duplicates(ts=ts)
+        self.__validate_ts(ts=ts, time_col_name=time_col, data_col_name=val_col)
+        self.hooks: List[Hook] = hooks  # todo : default post analysis hook
+        self.ts: DataFrame = ts.sort(time_col).select([time_col, val_col])
         self.analysis_queue: List[Analyzer] = list()
         self.time_col_name: str = time_col
         self.data_col_name: str = val_col
-        try:
-            self.__validate_ts(val_col, time_col)
-        except Exception as e:  # todo: Custom exception or specific
-            logger.error(
-                "Error in validation ts, ts must be pyspark sql dataframe that has one DatatimeType column, "
-                "and has one timeseries value(float or number) column"
-            )
-            raise e
-        else:
-            regularity_analyzer: Analyzer = RegularityAnalyzer()
-            self.regularity_report: AnalysisReport = regularity_analyzer.analyze(
-                ts=self.ts, time_col_name=time_col
-            )
-            self.__notify_report(self.regularity_report)
-            self.__enqueue_analysis_job()
+
+        regularity_analyzer: Analyzer = RegularityAnalyzer()
+        self.regularity_report: AnalysisReport = regularity_analyzer.analyze(
+            ts=self.ts, time_col_name=time_col
+        )
+        self.__notify_report(self.regularity_report)
+        self.__enqueue_analysis_job()
         logger.debug("Setup Analyzer finish")
 
-    def __validate_ts(self, val_col: str, time_col: str) -> bool:
-        pass
+    def __validate_ts(self, ts: DataFrame, time_col_name: str, data_col_name: str):
+        """
+        If has validation error, it raise exception
+        :param val_col:
+        :param time_col:
+        :return:
+        """
+        logger.debug("Validate ts")
+        for validator in self.validators:
+            validator(ts=ts, time_col_name=time_col_name, data_col_name=data_col_name)
+        # map(lambda validator: validator(ts=ts, time_col_name=time_col_name, data_col_name=data_col_name), self.validators)
 
     def __notify_report(self, report: AnalysisReport):
         map(lambda hook: hook.do_post_analysis(report), self.hooks)

@@ -33,7 +33,8 @@ class ClusteringAndApproximateGCD(PeriodCalcStrategy):
         bandwidth = estimate_bandwidth(
             diff_array, quantile=0.5
         )  # todo : adjust quantile index
-        meanshift = MeanShift(bandwidth=round(bandwidth, 3))
+        bandwidth = round(bandwidth, 3)
+        meanshift = MeanShift(bandwidth=bandwidth if bandwidth > 0 else None)
         cluster_labels = meanshift.fit_predict(diff_array)
         cluster_label_df = diff_df.sql_ctx.createDataFrame(
             enumerate(cluster_labels.tolist(), start=1), ["id", "label"]
