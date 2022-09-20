@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-09-20)
+### Feature
+* [AICNS-35] Add autocorrelation analyzer ([`a6f3c5c`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/a6f3c5cc9458402082bb5fdbdd48f648210e9359))
+
 ## v0.2.0 (2022-09-19)
 ### Feature
 * [AICNS-46] Add missing value hanlder with some strategies ([`7f5eb1e`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/7f5eb1e4a775d6869f1ca67b5d57cb015da7c8df))
