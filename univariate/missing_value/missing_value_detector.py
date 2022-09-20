@@ -27,7 +27,7 @@ class MissingValueDetector:
     regularity_report: AnalysisReport
     unmarked_strategy: UnmarkedMissingValueDetectionStrategy
 
-    def __init__(self, regularity_report: AnalysisReport, unmarked_detection_strategy_type: Optional[UnmarkedMissingValueDetectionStrategyType], marked_only: bool=False):
+    def __init__(self, regularity_report: AnalysisReport, unmarked_detection_strategy_type: Optional[UnmarkedMissingValueDetectionStrategyType]=None, marked_only: bool=False):
         """
 
         :param regularity_report:
