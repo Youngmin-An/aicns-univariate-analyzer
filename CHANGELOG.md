@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2022-09-21)
+### Feature
+* [AICNS-34] Add decomposition analyzer ([`71aefee`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/71aefee24233c1a334e05a5517f55186f595c29a))
+
 ## v0.3.0 (2022-09-20)
 ### Feature
 * [AICNS-35] Add autocorrelation analyzer ([`a6f3c5c`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/a6f3c5cc9458402082bb5fdbdd48f648210e9359))
