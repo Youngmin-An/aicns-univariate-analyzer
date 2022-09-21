@@ -3,3 +3,4 @@ from univariate.analyzer.analyzer import Analyzer
 from univariate.analyzer.regularity_analyzer import RegularityAnalyzer
 from univariate.analyzer.descriptive_stat_analyzer import DescriptiveStatAnalyzer
 from univariate.analyzer.autocorrelation_analyzer import AutocorrelationAnalyzer
+from univariate.analyzer.decomposition_analyzer import DecompositionAnalyzer
