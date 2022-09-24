@@ -2,6 +2,9 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.0 (2022-09-24)
+
+
 ## v0.4.0 (2022-09-21)
 ### Feature
 * [AICNS-34] Add decomposition analyzer ([`71aefee`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/71aefee24233c1a334e05a5517f55186f595c29a))
