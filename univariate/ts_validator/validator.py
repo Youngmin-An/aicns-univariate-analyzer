@@ -12,5 +12,5 @@ class Validator(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def __call__(self, ts: DataFrame, **kwargs):
+    def validate(self, ts: DataFrame, time_col_name: str):
         pass
