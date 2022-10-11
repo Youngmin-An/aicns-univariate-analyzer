@@ -17,20 +17,20 @@ class ForwardValidator(Validator):
     Validate ts has monotonic forward timestamps only, not backward and equal
     """
 
-    def __call__(self, ts: DataFrame, **kwargs):
+    def validate(self, ts: DataFrame, time_col_name: str):
         logger.debug("Forward validator called")
         lagged_time_ts = (
-            ts.select(kwargs["time_col_name"])
+            ts.select(time_col_name)
             .withColumn("idx", F.monotonically_increasing_id())
             .withColumn(
                 "lagged_time",
-                F.lag(kwargs["time_col_name"]).over(Window.orderBy("idx")),
+                F.lag(time_col_name).over(Window.orderBy("idx")),
             )
         )
         non_forward_ts = (
             lagged_time_ts.withColumn(
                 "diff",
-                lagged_time_ts[kwargs["time_col_name"]] - lagged_time_ts["lagged_time"],
+                lagged_time_ts[time_col_name] - lagged_time_ts["lagged_time"],
             )
             .filter(F.col("diff") <= 0.0)
             .cache()
