@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.0 (2022-10-11)
+### Feature
+* [AICNS-67] Add mock validator ([`1930361`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/193036158f29ed9551b83cc39f0f4dcc893b895f))
+
 ## v0.5.1 (2022-09-25)
 ### Fix
 * Downgrade pyspark to 3.0.3 ([`7db218b`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/7db218b50ced5df830e7975fbc742d9264377933))
