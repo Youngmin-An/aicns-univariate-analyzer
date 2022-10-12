@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2022-10-12)
+### Feature
+* [AICNS-72] No regularity decision in few data ([`bdb8b9e`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/bdb8b9e1343f84ce19cff982de3b083d9f836a1d))
+
 ## v0.6.0 (2022-10-11)
 ### Feature
 * [AICNS-67] Add mock validator ([`1930361`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/193036158f29ed9551b83cc39f0f4dcc893b895f))
