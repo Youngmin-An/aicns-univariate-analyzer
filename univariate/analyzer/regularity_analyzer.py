@@ -41,6 +41,17 @@ class RegularityAnalyzer(Analyzer):
         :return:
         """
         logger.debug("analyze called")
+
+        # [AINCS-72] No decision when few data
+        # todo: where from threshold config
+        threshold = 5
+        if ts.count() < threshold:
+            report = AnalysisReport()
+            report.parameters["period"] = None
+            report.parameters["periodic_error"] = None
+            report.parameters["regularity"] = "no_decision"
+            return report
+
         diff_col_name = kwargs["time_col_name"] + "_diff"
         differenced_timestamp = self.__make_difference_series_of_timestamp(
             ts, kwargs["time_col_name"], diff_col_name
