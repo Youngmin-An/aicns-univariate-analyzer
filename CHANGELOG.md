@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.0 (2022-10-14)
+### Feature
+* [AICNS-85] Convert direct regularity, period parameter ([`a818c74`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/a818c74c07364250a9065f0c14028d242daf473c))
+
 ## v0.7.0 (2022-10-12)
 ### Feature
 * [AICNS-72] No regularity decision in few data ([`bdb8b9e`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/bdb8b9e1343f84ce19cff982de3b083d9f836a1d))
