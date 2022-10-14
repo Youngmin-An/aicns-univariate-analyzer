@@ -7,7 +7,6 @@ from pyspark.sql.functions import udf
 from pyspark.sql.types import ArrayType, LongType
 from pyspark.sql.window import Window
 import numpy as np
-from univariate.analyzer import AnalysisReport
 from univariate.missing_value.strategy.unmarked_detection import (
     UnmarkedMissingValueDetectionStrategy,
 )
@@ -30,14 +29,14 @@ class DivideAndRound(UnmarkedMissingValueDetectionStrategy):
         ts: DataFrame,
         time_col_name: str,
         data_col_name: str,
-        regularity_report: AnalysisReport,
+        period: int
     ) -> DataFrame:
         """
 
         :param ts:
         :param time_col_name:
         :param data_col_name:
-        :param regularity_report:
+        :param period:
         :return: 'Null' interleaved dataframe as detected unmarked missing values
         """
         # todo: enhance algorithm
@@ -52,7 +51,7 @@ class DivideAndRound(UnmarkedMissingValueDetectionStrategy):
             .withColumn(
                 "ratio_by_period",
                 (F.col(time_col_name) - F.col("lagged_time"))
-                / regularity_report.parameters["period"],
+                / period,
             )
         )
         round_df = divide_df.filter("ratio_by_period >= 1.7").withColumn(
