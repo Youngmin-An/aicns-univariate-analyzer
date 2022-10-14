@@ -21,6 +21,6 @@ class UnmarkedMissingValueDetectionStrategy(metaclass=ABCMeta):
         ts: DataFrame,
         time_col_name: str,
         data_col_name: str,
-        regularity_report: AnalysisReport,
+        period: int
     ) -> DataFrame:
         pass
