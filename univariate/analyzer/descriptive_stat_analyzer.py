@@ -55,13 +55,13 @@ class DescriptiveStatAnalyzer(Analyzer):
                 F.min(kwargs["data_col_name"]).alias("min"),
                 F.count(kwargs["data_col_name"]).alias("count"),
                 F.mean(kwargs["data_col_name"]).alias("mean"),
-                F.percentile_approx(kwargs["data_col_name"], percentage=0.5).alias(
+                F.expr(f"percentile_approx({kwargs['data_col_name']}, 0.5)").alias(
                     "median"
                 ),
-                F.percentile_approx(kwargs["data_col_name"], percentage=0.25).alias(
+                F.expr(f"percentile_approx({kwargs['data_col_name']}, 0.25)").alias(
                     "Q1"
                 ),
-                F.percentile_approx(kwargs["data_col_name"], percentage=0.7).alias(
+                F.expr(f"percentile_approx({kwargs['data_col_name']}, 0.75)").alias(
                     "Q3"
                 ),
                 F.stddev_samp(kwargs["data_col_name"]).alias("stddev"),
