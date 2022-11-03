@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.2 (2022-11-03)
+### Fix
+* Upgrade pyspark setup version up to 3.1.0 ([`5380cb5`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/5380cb5b28ad916c11a1ac59f97e910589b66431))
+
 ## v0.8.1 (2022-11-03)
 ### Fix
 * [AICNS-94] Upgrade Pyspark version up to 3.1.0 ([`379f3d2`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/379f3d26d220555494ff84b12019117584afb2a0))
