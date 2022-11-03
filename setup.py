@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-__version__ = "0.8.0"
+__version__ = "0.8.1"
 
 setup(
     name="aicns-univariate-analyzer",

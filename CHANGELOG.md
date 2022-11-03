@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.1 (2022-11-03)
+### Fix
+* [AICNS-94] Upgrade Pyspark version up to 3.1.0 ([`379f3d2`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/379f3d26d220555494ff84b12019117584afb2a0))
+
 ## v0.8.0 (2022-10-14)
 ### Feature
 * [AICNS-85] Convert direct regularity, period parameter ([`a818c74`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/a818c74c07364250a9065f0c14028d242daf473c))
