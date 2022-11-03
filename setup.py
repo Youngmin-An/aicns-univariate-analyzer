@@ -14,7 +14,7 @@ setup(
     install_requires=[
         "pandas==1.1.5",
         "plotly==5.10.0",
-        "pyspark==3.0.3",
+        "pyspark>=3.1.0",
         "scikit-learn==0.24.2",
         "statsmodels==0.13.2"
     ],
