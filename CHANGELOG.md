@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.3 (2022-11-03)
+### Fix
+* [AICNS-95] Ensure backward compatibility function about percentile_approx ([`38b37b8`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/38b37b8f25bc51924d37650833e45e3b9bb6426f))
+
 ## v0.8.2 (2022-11-03)
 ### Fix
 * Upgrade pyspark setup version up to 3.1.0 ([`5380cb5`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/5380cb5b28ad916c11a1ac59f97e910589b66431))
