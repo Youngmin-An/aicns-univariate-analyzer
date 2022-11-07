@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.9.0 (2022-11-07)
+### Feature
+* [AICNS-100] Add IQR method outlier detector ([`64c1aac`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/64c1aacc2de732b222a5a8bb88a78e9afa5a4d8e))
+* [AICNS-100] Create Anomaly Detector module and Abstract Detector ([`f91580d`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/f91580da5be4ca659384c4f92625dba778479200))
+
 ## v0.8.3 (2022-11-03)
 ### Fix
 * [AICNS-95] Ensure backward compatibility function about percentile_approx ([`38b37b8`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/38b37b8f25bc51924d37650833e45e3b9bb6426f))
