@@ -5,6 +5,7 @@
 from enum import Enum
 from abc import ABCMeta, abstractmethod
 from pyspark.sql import DataFrame
+from univariate.analyzer import AnalysisReport
 
 
 class MissingValueHandleStrategyType(Enum):
@@ -32,6 +33,6 @@ class MissingValueHandleStrategy(metaclass=ABCMeta):
 
     @abstractmethod
     def handle(
-        self, missed_ts: DataFrame, time_col_name: str, data_col_name
+        self, missed_ts: DataFrame, time_col_name: str, data_col_name: str, handled_col_name: str, **kwargs
     ) -> DataFrame:
         pass
