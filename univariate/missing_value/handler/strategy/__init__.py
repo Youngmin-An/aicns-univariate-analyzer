@@ -1,4 +1,5 @@
 from univariate.missing_value.handler.strategy.missing_value_handle_strategy import MissingValueHandleStrategyType, MissingValueHandleStrategy
 from univariate.missing_value.handler.strategy.mean_imputation import MeanImputation
 from univariate.missing_value.handler.strategy.median_imputation import MedianImputation
+from univariate.missing_value.handler.strategy.mode_imputation import ModeImputation
 from univariate.missing_value.handler.strategy.deletion import Deletion
