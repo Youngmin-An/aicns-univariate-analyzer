@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.10.0 (2022-11-15)
+### Feature
+* [AICNS-107] Add bocf imputation strategy ([`5842abc`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/5842abccb70ec926a4ceac2fc9583717b23b28a3))
+* [AICNS-107] Add locf imputation strategy ([`a3b9405`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/a3b9405a140e23180fdfa9d9605c5c41c0a730ff))
+* [AICNS-107] Add mode imputation strategy ([`aa17b61`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/aa17b61407ed37a55b9a951cf4c24740237b8b86))
+* [AICNS-107] Add median imputation strategy ([`78b9053`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/78b9053b0166d9f8776e78dc59c3d74ee94c6a93))
+
+### Fix
+* [AICNS-107] Update missing value handling strategies ([`7064c75`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/7064c75d801d7e67dd96f3aad24b73de74ca513a))
+* [AICNS-107] Refactor missing value handler & Add mean imputation strategy ([`38c8259`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/38c8259416491cb5164310d3944c3a3e04c6e57e))
+* [AICNS-107] Refactor missingvalue module structure ([`0465366`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/046536624429187d9b708195c46cfb9ac48c4c45))
+
 ## v0.9.0 (2022-11-07)
 ### Feature
 * [AICNS-100] Add IQR method outlier detector ([`64c1aac`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/64c1aacc2de732b222a5a8bb88a78e9afa5a4d8e))
