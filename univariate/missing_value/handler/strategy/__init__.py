@@ -3,4 +3,5 @@ from univariate.missing_value.handler.strategy.mean_imputation import MeanImputa
 from univariate.missing_value.handler.strategy.median_imputation import MedianImputation
 from univariate.missing_value.handler.strategy.mode_imputation import ModeImputation
 from univariate.missing_value.handler.strategy.locf_imputation import LOCFImputation
+from univariate.missing_value.handler.strategy.bocf_imputation import BOCFImputation
 from univariate.missing_value.handler.strategy.deletion import Deletion
