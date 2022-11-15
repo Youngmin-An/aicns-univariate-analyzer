@@ -5,6 +5,7 @@
 from enum import Enum
 from abc import ABCMeta, abstractmethod
 from pyspark.sql import DataFrame
+from univariate.analyzer import AnalysisReport
 
 
 class MissingValueHandleStrategyType(Enum):
@@ -12,13 +13,21 @@ class MissingValueHandleStrategyType(Enum):
     mean_imputation = "MeanImputation"
     median_imputation = "MedianImputation"
     mode_imputation = "ModeImputation"
-    zero_imputation = "ZeroImputation"
-    constant_imputation = "ConstantImputation"
+    locf_imputation = "LOCFImputation"
+    bocf_imputation = "BOCFImputation"
+    # constant_imputation = "ConstantImputation"
+    # seasonality-based imputation
+
+    #linear_interpolation = "LinearInterpolation"
+    #polynomial_interpolation = "PolynomialInterpolation"
+    #spline_interpolation = "SplineInterpolation"
+
     # k_nn_imputation = "KNNImputation" #multi
     # mice_imputation = "MICEImputation" #multi
-    hot_deck_imputation = "HOT_DECK_IMPUTATION"
-    datawig = "Datawig"
-    interpolation = "Interpolation"  # todo: SOTA
+    # regression # multi
+    # stochastic regressioin # multi
+    # hot_deck_imputation = "HOT_DECK_IMPUTATION" multi
+
     # todo: continous update
     # todo: where cross-informated strategy will be
     # todo: enhance
@@ -32,6 +41,6 @@ class MissingValueHandleStrategy(metaclass=ABCMeta):
 
     @abstractmethod
     def handle(
-        self, missed_ts: DataFrame, time_col_name: str, data_col_name
+        self, missed_ts: DataFrame, time_col_name: str, data_col_name: str, handled_col_name: str, **kwargs
     ) -> DataFrame:
         pass
