@@ -20,8 +20,7 @@ class MissingValueHandleStrategyType(Enum):
 
     linear_interpolation = "LinearInterpolation"
     lagrange_interpolation = "LagrangeInterpolation"
-    #spline_interpolation = "SplineInterpolation"
-    #cubic spline
+    cubic_spline_interpolation = "CubicSplineInterpolation"
 
     # k_nn_imputation = "KNNImputation" #multi
     # mice_imputation = "MICEImputation" #multi
