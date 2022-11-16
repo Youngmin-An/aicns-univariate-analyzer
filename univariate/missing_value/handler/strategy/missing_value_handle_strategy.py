@@ -19,8 +19,9 @@ class MissingValueHandleStrategyType(Enum):
     # seasonality-based imputation
 
     linear_interpolation = "LinearInterpolation"
-    #polynomial_interpolation = "PolynomialInterpolation"
+    lagrange_interpolation = "LagrangeInterpolation"
     #spline_interpolation = "SplineInterpolation"
+    #cubic spline
 
     # k_nn_imputation = "KNNImputation" #multi
     # mice_imputation = "MICEImputation" #multi
