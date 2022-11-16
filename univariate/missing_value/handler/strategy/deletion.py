@@ -2,16 +2,13 @@
 
 """
 
-from univariate.missing_value.strategy.handle_missing_value import (
-    MissingValueHandleStrategy,
-)
+from univariate.missing_value.handler.strategy import MissingValueHandleStrategy
 from pyspark.sql import DataFrame
 
 
 class Deletion(MissingValueHandleStrategy):
     """
     Delete data missing values in dataframe(na, null)
-    It does not drop time col missing values
     """
 
     def handle(
