@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.11.0 (2022-11-16)
+### Feature
+* [AICNS-108] Add cubic spline interpolation strategy ([`24869b6`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/24869b6eb5d126d8de1c4d1c13850d3bae683d0e))
+* [AICNS-108] Add lagrange interpolation strategy ([`d1866b4`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/d1866b46ea9cd6ca10f01d28136693053d47de4e))
+* [AICNS-108] Add linear interpolation strategy ([`293c8c9`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/293c8c91200671743fa5b06e2577f9dee7e3471f))
+
 ## v0.10.0 (2022-11-15)
 ### Feature
 * [AICNS-107] Add bocf imputation strategy ([`5842abc`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/5842abccb70ec926a4ceac2fc9583717b23b28a3))
