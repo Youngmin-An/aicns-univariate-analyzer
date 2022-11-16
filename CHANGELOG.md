@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.11.1 (2022-11-16)
+### Fix
+* [AICNS-124] Fix remainning of previous module structure on deletion strategy ([`989075a`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/989075af1965da16fd29b85721bbe7292fee27b8))
+* [AICNS-124] Delete dummy interpolation strategy ([`d28abdf`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/d28abdf0aee1e3a79537de490c02cda315f51f2f))
+
 ## v0.11.0 (2022-11-16)
 ### Feature
 * [AICNS-108] Add cubic spline interpolation strategy ([`24869b6`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/24869b6eb5d126d8de1c4d1c13850d3bae683d0e))
