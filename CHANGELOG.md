@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.12.0 (2022-11-21)
+### Feature
+* [AICNS-126] Add mean downsampling strategy & Sampler client ([`ebca2da`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/ebca2da0b7495ab49c5b93c29a951a2e40ca7072))
+
 ## v0.11.1 (2022-11-16)
 ### Fix
 * [AICNS-124] Fix remainning of previous module structure on deletion strategy ([`989075a`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/989075af1965da16fd29b85721bbe7292fee27b8))
