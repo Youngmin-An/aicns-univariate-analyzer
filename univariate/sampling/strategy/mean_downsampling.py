@@ -3,11 +3,11 @@
 """
 
 from univariate.sampling.strategy import SamplingStrategy
-from univariate.sampling.utils import find_start_timestamp_by_freq, construct_range_df
+from univariate.sampling.utils import find_start_timestamp_by_freq, construct_range_array
 from pyspark.sql import DataFrame, SparkSession
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from pyspark.sql import functions as F
-from pyspark.sql.types import LongType
+from pyspark.sql.types import LongType, IntegerType
 
 
 class MeanDownsampling(SamplingStrategy):
@@ -36,11 +36,14 @@ class MeanDownsampling(SamplingStrategy):
         if by_freq:
             first_timestamp = ts.sort(time_col_name).first().asDict()[time_col_name]
             first_start = find_start_timestamp_by_freq(first_timestamp, sampling_period)
+            last_timestamp = ts.sort(time_col_name).tail(1)[0].asDict()[time_col_name]
+            last_start = find_start_timestamp_by_freq(last_timestamp, sampling_period)
 
-        # partition col by intervals
-        # calc_range_start_udf = F.udf(calc_range_start, LongType())  # todo: now udf has a trouble returning null
-        # partitioned_df = ts.withColumn("_range_start", calc_range_start_udf(F.col(time_col_name), F.lit(first_start), F.lit(sampling_period)))  # todo: physically repartition?
-        partitioned_df = ts.withColumn("_range_start", (F.floor((F.col(time_col_name) - F.lit(first_start)) / F.lit(sampling_period)) * F.lit(sampling_period) + F.lit(first_start)).cast(LongType()))
+            start_series, end_series = construct_range_array(sampling_period, first_start, last_start, True)
+            logger.info(f"start_series {start_series}")
+            logger.info(f"end_series {end_series}")
+            # partition col by intervals
+            partitioned_df = ts.withColumn("_range_start", partitionize_udf(start_series, end_series)(F.col(time_col_name)))
 
         # aggregation
         agg_cols = [F.mean(data_col_name).alias(data_col_name),  F.count("*").alias("count")]
@@ -75,3 +78,20 @@ def calc_range_start(timestamp: int, first_start: int, sampling_period: int) -> 
     """
     return ((timestamp - first_start) // sampling_period) * sampling_period + first_start
 '''
+
+
+def partitionize(timestamp: int, start_series: List[int], end_series: List[int]) -> int:
+    """
+
+    :param timestamp:
+    :param start_series:
+    :param end_series:
+    :return:
+    """
+    for i in range(len(start_series)):
+        if start_series[i] <= timestamp and end_series[i] > timestamp:
+            return start_series[i]
+
+
+def partitionize_udf(start_series: List[int], end_series: List[int]):
+    return F.udf(lambda t: partitionize(t, start_series, end_series))
