@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.0 (2022-11-22)
+### Feature
+* [AICNS-131] Decompose with freq alias ([`865e0fe`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/865e0fee031a7651c49fb326514302fdc8520f65))
+
 ## v0.12.1 (2022-11-22)
 ### Fix
 * [AICNS-130] Add pendulum package ([`f3e91ec`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/f3e91ec63db56a71df2ad5963c3eb44fbf64bd23))
