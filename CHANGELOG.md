@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.12.1 (2022-11-22)
+### Fix
+* [AICNS-130] Add pendulum package ([`f3e91ec`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/f3e91ec63db56a71df2ad5963c3eb44fbf64bd23))
+* [AICNS-130] Fix ambigious range in sampling with freq alias ([`1f61bde`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/1f61bde362e40eb7184186e33572c41a3c43c752))
+
 ## v0.12.0 (2022-11-21)
 ### Feature
 * [AICNS-126] Add mean downsampling strategy & Sampler client ([`ebca2da`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/ebca2da0b7495ab49c5b93c29a951a2e40ca7072))
