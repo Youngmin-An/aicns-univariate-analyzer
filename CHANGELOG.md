@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.0 (2022-11-22)
+### Feature
+* [AICNS-132] Enhance decomposed result not pandas serieses but spark df ([`d1ac070`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/d1ac070d2f297b2510a56fb16fa867592dd73848))
+
 ## v0.13.0 (2022-11-22)
 ### Feature
 * [AICNS-131] Decompose with freq alias ([`865e0fe`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/865e0fee031a7651c49fb326514302fdc8520f65))
