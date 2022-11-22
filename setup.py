@@ -16,6 +16,7 @@ setup(
         "plotly==5.10.0",
         "pyspark>=3.1.0",
         "scikit-learn==0.24.2",
-        "statsmodels==0.13.2"
+        "statsmodels==0.13.2",
+        "pendulum==2.1.2"
     ],
 )

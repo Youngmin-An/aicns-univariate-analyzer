@@ -1,35 +1,60 @@
 """
 
 """
-
-
-from pyspark.sql import DataFrame, SparkSession
+import pendulum
+from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, LongType
 from univariate.sampling.utils import freq_to_period_map
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import List, Tuple
+from pendulum import period
 
 
-def construct_range_df(sampling_period: int, first_start: int, last_start: int) -> DataFrame:
+def construct_range_array(sampling_period: int, first_start: int, last_start: int, by_freq: bool) -> Tuple[List[int], List[int]]:
     """
-    Construct spark dataframe that contains each row {"start", "end"} cols representing [start, end) ranges
+    Construct range tuple that contains each ("start", "end") array representing (2, n) shape
     Note: Each range is half-closed interval
-    :param time_col_name:
     :param sampling_period:
     :param first_start:
     :param last_start:
+    :param by_freq:
     :return:
     """
-    start_series = range(first_start, last_start + 1, sampling_period)
-    end_series = range(first_start + sampling_period, last_start + sampling_period + 1, sampling_period)
+    if by_freq:
+        start = pendulum.from_timestamp(int(first_start / 1000))
+        end = pendulum.from_timestamp(int(last_start / 1000))
+        period = pendulum.period(start, end)
 
-    schema = StructType([
-        StructField("start", LongType(), False),
-        StructField("end", LongType(), False)
-    ])
-    range_df = SparkSession.getActiveSession().createDataFrame(data=[start_series, end_series], schema=schema)
+        #unit_dict = {'A': 'years', 'M': 'months', 'W': 'weeks', 'D': 'days', 'H': 'hours', 'Q': 'months'}
+        try:
+            freq = list(freq_to_period_map.keys())[list(freq_to_period_map.values()).index(sampling_period)]
+        except Exception as e:
+            raise ValueError(f"Can't convert sampling period {sampling_period} to freq")
+        if freq == "A":
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("years")))
+            end_series = list(map(lambda x: int(x.add(years=1).timestamp() * 1000), period.range("years")))
+        elif freq == "M":
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("months")))
+            end_series = list(map(lambda x: int(x.add(months=1).timestamp() * 1000), period.range("months")))
+        elif freq == "W":
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("weeks")))
+            end_series = list(map(lambda x: int(x.add(weeks=1).timestamp() * 1000), period.range("weeks")))
+        elif freq == "D":
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("days")))
+            end_series = list(map(lambda x: int(x.add(days=1).timestamp() * 1000), period.range("days")))
+        elif freq == "H":
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("hours")))
+            end_series = list(map(lambda x: int(x.add(hours=1).timestamp() * 1000), period.range("hours")))
+        elif freq == 'Q':
+            start_series = list(map(lambda x: int(x.timestamp() * 1000), period.range("months", 3)))
+            end_series = list(map(lambda x: int(x.add(months=3).timestamp() * 1000), period.range("months", 3)))
+        else:
+            raise ValueError(f"Freq {freq} has no rule")
+    else:
+        start_series = list(range(first_start, last_start + 1, sampling_period))
+        end_series = list(range(first_start + sampling_period, last_start + sampling_period + 1, sampling_period))
 
-    return range_df
+    return start_series, end_series
 
 
 def find_start_timestamp_by_freq(observed_at: int, sampling_period: int) -> int:
