@@ -39,10 +39,12 @@ class DecompositionAnalyzer(Analyzer):
         ts_pd[time_col_name] = pd.to_datetime(ts_pd[time_col_name], unit='ms')  # todo: ms constraint?
         stl = STL(ts_pd.set_index(time_col_name)[data_col_name], period=period).fit()  # todo: strategies for ts decompositions  #todo: multi seasonal
 
-        decomposed_pd = pd.concat([stl.observed, stl.trend, stl.seasonal, stl.resid], axis=1).reset_index(drop=False)
+        # pandas datetime drop timestamp's millisec, so recover with original timestamp from ts
+        timestamp_series = ts.select(time_col_name).sort(time_col_name).toPandas()[time_col_name]
+        decomposed_pd = pd.concat([stl.trend, stl.seasonal, stl.resid], axis=1).reset_index(drop=True)
+        decomposed_pd[time_col_name] = timestamp_series
         decomposed_df = SparkSession.getActiveSession().createDataFrame(decomposed_pd)
-        decomposed_df = decomposed_df.withColumn(time_col_name, F.unix_timestamp(time_col_name) * 1000)
-        decomposed_df = ts.join(decomposed_df, [time_col_name, data_col_name], "left").sort(time_col_name)
+        decomposed_df = ts.join(decomposed_df, time_col_name, "left").sort(time_col_name)
 
         report = AnalysisReport()
         report.parameters['decomposed_df'] = decomposed_df
