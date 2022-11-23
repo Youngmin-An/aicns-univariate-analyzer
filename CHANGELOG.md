@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.1 (2022-11-23)
+### Fix
+* [AICNS-135] Fix a bug that pandas datetime drop timestamp's millisec ([`6889331`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/688933170d28a2c6e3ea71ad910ca583e553083a))
+
 ## v0.14.0 (2022-11-22)
 ### Feature
 * [AICNS-132] Enhance decomposed result not pandas serieses but spark df ([`d1ac070`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/d1ac070d2f297b2510a56fb16fa867592dd73848))
