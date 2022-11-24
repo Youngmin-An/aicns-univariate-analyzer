@@ -12,15 +12,11 @@ class AnomalyDetector(metaclass=ABCMeta):
 
     """
     @staticmethod
-    def detect(ts: DataFrame, data_col_name: str, q1: Optional[float], median: Optional[float], q3: Optional[float], ad_hoc: bool=False) -> AnalysisReport:
+    def detect(ts: DataFrame, **kwargs) -> AnalysisReport:
         """
 
         :param ts:
-        :param data_col_name:
-        :param q1:
-        :param median:
-        :param q3:
-        :param ad_hoc:
+        :param kwargs:
         :return:
         """
         pass
