@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.15.0 (2022-11-24)
+### Feature
+* [AICNS-136] Add anomaly detector by residual dist ([`7bc57ce`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/7bc57ce7d34e75027409c401569369af5d739698))
+
 ## v0.14.1 (2022-11-23)
 ### Fix
 * [AICNS-135] Fix a bug that pandas datetime drop timestamp's millisec ([`6889331`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/688933170d28a2c6e3ea71ad910ca583e553083a))
