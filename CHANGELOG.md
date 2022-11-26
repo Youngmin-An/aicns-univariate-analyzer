@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.16.0 (2022-11-26)
+### Feature
+* [AICNS-141] ADD Exponential Moving Averaging strategy ([`2fdbd72`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/2fdbd72b4755aad7a37d2a53a6bd5ef92d54566c))
+* [AICNS-141] Add Anomaly handler ([`e92066b`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/e92066bece11a34e311a5d0f8e06e5a1d36d53f2))
+
 ## v0.15.0 (2022-11-24)
 ### Feature
 * [AICNS-136] Add anomaly detector by residual dist ([`7bc57ce`](https://github.com/Youngmin-An/aicns-univariate-analyzer/commit/7bc57ce7d34e75027409c401569369af5d739698))
